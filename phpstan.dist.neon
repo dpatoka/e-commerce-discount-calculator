@@ -1,0 +1,10 @@
+parameters:
+    level: 10
+    paths:
+        - src
+        - tests
+        - migrations
+    excludePaths:
+        - tests/bootstrap.php
+    tmpDir: /tmp/phpstan
+    ignoreErrors:

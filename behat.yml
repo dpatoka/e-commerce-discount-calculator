@@ -1,0 +1,5 @@
+default:
+    suites:
+
+    extensions:
+        DAMA\DoctrineTestBundle\Behat\ServiceContainer\DoctrineExtension: ~

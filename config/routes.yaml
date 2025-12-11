@@ -1,0 +1,5 @@
+discounts_api:
+    resource:
+        path: ../src/Modules/Discounts/Interface/API/
+        namespace: App\Modules\Discounts\Interface\API
+    type: attribute
