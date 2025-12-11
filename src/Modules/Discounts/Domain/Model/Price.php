@@ -28,6 +28,11 @@ readonly class Price implements PriceInterface
         return $this->amount->quantity;
     }
 
+    public function getAmountAsValueObject(): Amount
+    {
+        return $this->amount;
+    }
+
     public function getCurrency(): string
     {
         return $this->currency->value;

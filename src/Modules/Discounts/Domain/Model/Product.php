@@ -38,6 +38,13 @@ readonly class Product implements ProductInterface
         return $this->createWithNewPrice($newPrice);
     }
 
+    public function subtractPricePercentage(Percentage $percentage): self
+    {
+        $subtrahend = $percentage->ofAmount($this->price->getAmountAsValueObject());
+
+        return $this->subtractPriceAmount($subtrahend);
+    }
+
     private function createWithNewPrice(Price $price): Product
     {
         return new self(
