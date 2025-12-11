@@ -10,6 +10,7 @@ use App\Modules\Discounts\Domain\Model\Percentage;
 use App\Modules\Discounts\Domain\Model\Price;
 use App\Modules\Discounts\Domain\Model\Product;
 use App\Modules\Discounts\Domain\Model\ProductCollection;
+use App\Modules\Discounts\Domain\Model\Quantity;
 use App\SharedKernel\Domain\Currency;
 use PHPUnit\Framework\TestCase;
 
@@ -21,7 +22,7 @@ class PercentageDiscountTest extends TestCase
         $product = new Product(
             'PROD1',
             new Price(new Amount(1000), Currency::PLN),
-            1
+            new Quantity(1)
         );
         $collection = new ProductCollection($product);
 
@@ -35,9 +36,9 @@ class PercentageDiscountTest extends TestCase
     {
         $discount = new PercentageDiscount(new Percentage(10));
         $products = new ProductCollection(
-            new Product('PROD1', new Price(new Amount(1000), Currency::PLN), 1),
-            new Product('PROD2', new Price(new Amount(2000), Currency::PLN), 2),
-            new Product('PROD3', new Price(new Amount(500), Currency::PLN), 3)
+            new Product('PROD1', new Price(new Amount(1000), Currency::PLN), new Quantity(1)),
+            new Product('PROD2', new Price(new Amount(2000), Currency::PLN), new Quantity(2)),
+            new Product('PROD3', new Price(new Amount(500), Currency::PLN), new Quantity(3))
         );
 
         $result = $discount->apply($products);

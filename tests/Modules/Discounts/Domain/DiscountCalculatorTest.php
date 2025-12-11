@@ -11,6 +11,7 @@ use App\Modules\Discounts\Domain\Model\Amount;
 use App\Modules\Discounts\Domain\Model\Price;
 use App\Modules\Discounts\Domain\Model\Product;
 use App\Modules\Discounts\Domain\Model\ProductCollection;
+use App\Modules\Discounts\Domain\Model\Quantity;
 use App\Modules\Discounts\Domain\Port\CurrencyProviderInterface;
 use App\SharedKernel\Domain\Currency;
 use App\Tests\TestHelpers\Stubs\ZeroDiscountStub;
@@ -85,7 +86,7 @@ class DiscountCalculatorTest extends TestCase
                     new Amount(300),
                     Currency::PLN
                 ),
-                1
+                new Quantity(1)
             )
         );
 

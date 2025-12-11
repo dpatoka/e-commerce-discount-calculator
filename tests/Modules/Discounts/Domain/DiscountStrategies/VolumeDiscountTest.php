@@ -21,7 +21,7 @@ class VolumeDiscountTest extends TestCase
         $product = new Product(
             'PROD1',
             new Price(new Amount(1000), Currency::PLN),
-            5
+            new Quantity(5)
         );
         $collection = new ProductCollection($product);
 
@@ -37,7 +37,7 @@ class VolumeDiscountTest extends TestCase
         $product = new Product(
             'PROD1',
             new Price(new Amount(5000), Currency::PLN),
-            10
+            new Quantity(10)
         );
         $collection = new ProductCollection($product);
 
@@ -53,7 +53,7 @@ class VolumeDiscountTest extends TestCase
         $product = new Product(
             'PROD1',
             new Price(new Amount(1000), Currency::PLN),
-            4
+            new Quantity(4)
         );
         $collection = new ProductCollection($product);
 
@@ -67,10 +67,10 @@ class VolumeDiscountTest extends TestCase
     {
         $discount = new VolumeDiscount(new Amount(100), new Quantity(5));
         $products = new ProductCollection(
-            new Product('PROD1', new Price(new Amount(1000), Currency::PLN), 3),
-            new Product('PROD2', new Price(new Amount(2000), Currency::PLN), 5),
-            new Product('PROD3', new Price(new Amount(1500), Currency::PLN), 10),
-            new Product('PROD4', new Price(new Amount(3000), Currency::PLN), 4)
+            new Product('PROD1', new Price(new Amount(1000), Currency::PLN), new Quantity(3)),
+            new Product('PROD2', new Price(new Amount(2000), Currency::PLN), new Quantity(5)),
+            new Product('PROD3', new Price(new Amount(1500), Currency::PLN), new Quantity(10)),
+            new Product('PROD4', new Price(new Amount(3000), Currency::PLN), new Quantity(4))
         );
 
         $result = $discount->apply($products);

@@ -12,7 +12,7 @@ readonly class Product implements ProductInterface
     public function __construct(
         private string $code,
         private Price $price,
-        private int $quantity
+        private Quantity $quantity
     ) {
     }
 
@@ -28,7 +28,7 @@ readonly class Product implements ProductInterface
 
     public function getQuantity(): int
     {
-        return $this->quantity;
+        return $this->quantity->number;
     }
 
     public function subtractPriceAmount(Amount $amount): self

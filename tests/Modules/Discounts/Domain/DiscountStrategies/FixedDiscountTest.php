@@ -9,6 +9,7 @@ use App\Modules\Discounts\Domain\Model\Amount;
 use App\Modules\Discounts\Domain\Model\Price;
 use App\Modules\Discounts\Domain\Model\Product;
 use App\Modules\Discounts\Domain\Model\ProductCollection;
+use App\Modules\Discounts\Domain\Model\Quantity;
 use App\SharedKernel\Domain\Currency;
 use Exception;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -27,15 +28,15 @@ class FixedDiscountTest extends TestCase
             'accurate amount with one item' => [
                 'discountAmount' => 300,
                 'products' => new ProductCollection(
-                    new Product('PROD1', new Price(new Amount(1000), Currency::PLN), 1)
+                    new Product('PROD1', new Price(new Amount(1000), Currency::PLN), new Quantity(1))
                 ),
                 'expectedTotal' => 700,
             ],
             'accurate amount with two items' => [
                 'discountAmount' => 300,
                 'products' => new ProductCollection(
-                    new Product('PROD1', new Price(new Amount(1000), Currency::PLN), 1),
-                    new Product('PROD2', new Price(new Amount(1500), Currency::PLN), 1)
+                    new Product('PROD1', new Price(new Amount(1000), Currency::PLN), new Quantity(1)),
+                    new Product('PROD2', new Price(new Amount(1500), Currency::PLN), new Quantity(1))
                 ),
                 'expectedTotal' => 1900,
             ],
@@ -48,7 +49,7 @@ class FixedDiscountTest extends TestCase
             'too big amount with one item' => [
                 'discountAmount' => 1500,
                 'products' => new ProductCollection(
-                    new Product('PROD1', new Price(new Amount(1000), Currency::PLN), 1)
+                    new Product('PROD1', new Price(new Amount(1000), Currency::PLN), new Quantity(1))
                 ),
             ],
         ];

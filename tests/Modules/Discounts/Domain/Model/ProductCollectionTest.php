@@ -8,6 +8,7 @@ use App\Modules\Discounts\Domain\Model\Amount;
 use App\Modules\Discounts\Domain\Model\Price;
 use App\Modules\Discounts\Domain\Model\Product;
 use App\Modules\Discounts\Domain\Model\ProductCollection;
+use App\Modules\Discounts\Domain\Model\Quantity;
 use App\SharedKernel\Domain\Currency;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
@@ -23,8 +24,8 @@ class ProductCollectionTest extends TestCase
             ],
             '2 products' => [
                 new ProductCollection(
-                    new Product('CODE1', new Price(new Amount(100), Currency::PLN), 1),
-                    new Product('CODE2', new Price(new Amount(200), Currency::PLN), 1)
+                    new Product('CODE1', new Price(new Amount(100), Currency::PLN), new Quantity(1)),
+                    new Product('CODE2', new Price(new Amount(200), Currency::PLN), new Quantity(1))
                 ),
                 2
             ],
@@ -40,7 +41,7 @@ class ProductCollectionTest extends TestCase
             ],
             '1 product' => [
                 new ProductCollection(
-                    new Product('CODE1', new Price(new Amount(100), Currency::PLN), 1)
+                    new Product('CODE1', new Price(new Amount(100), Currency::PLN), new Quantity(1))
                 ),
                 false
             ],
@@ -56,8 +57,8 @@ class ProductCollectionTest extends TestCase
             ],
             '2 products' => [
                 new ProductCollection(
-                    new Product('CODE1', new Price(new Amount(100), Currency::PLN), 1),
-                    new Product('CODE2', new Price(new Amount(250), Currency::PLN), 1)
+                    new Product('CODE1', new Price(new Amount(100), Currency::PLN), new Quantity(1)),
+                    new Product('CODE2', new Price(new Amount(250), Currency::PLN), new Quantity(1))
                 ),
                 350,
             ],
