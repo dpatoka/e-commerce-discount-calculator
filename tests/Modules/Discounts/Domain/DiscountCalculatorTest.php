@@ -5,12 +5,19 @@ declare(strict_types=1);
 namespace App\Tests\Modules\Discounts\Domain;
 
 use App\Modules\Discounts\Domain\DiscountCalculator;
+use App\Modules\Discounts\Domain\DiscountInterface;
+use App\Modules\Discounts\Domain\Port\CurrencyProviderInterface;
+use App\Modules\Discounts\Domain\ProductCollection;
+use App\SharedKernel\Domain\Currency;
 use App\Tests\TestHelpers\Stubs\ZeroDiscountStub;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 class DiscountCalculatorTest extends TestCase
 {
+    /**
+     * @return array<string, array{discounts: array<int, mixed>, expectException: bool, exceptionMessage: string}>
+     */
     public static function constructProvider(): array
     {
         return [
@@ -33,26 +40,50 @@ class DiscountCalculatorTest extends TestCase
                     new ZeroDiscountStub(),
                 ],
                 'expectException' => false,
-                'exceptionMessage' => null
+                'exceptionMessage' => ''
             ],
         ];
     }
 
+    /**
+     * @param array<int, DiscountInterface> $discounts
+     */
     #[DataProvider('constructProvider')]
-    public function testConstruct(array $discounts, bool $expectException, ?string $exceptionMessage): void
-    {
+    public function testConstruct(
+        array $discounts,
+        bool $expectException,
+        string $exceptionMessage
+    ): void {
         if ($expectException) {
             $this->expectExceptionMessage($exceptionMessage);
         }
 
-        $calc = new DiscountCalculator(...$discounts);
+        $calc = $this->getDiscountCalculator(...$discounts);
         $this->assertInstanceOf(DiscountCalculator::class, $calc);
     }
 
+    public function testApplyToEmptyProductCollection(): void
+    {
+        $products = new ProductCollection();
+
+        $calc = $this->getDiscountCalculator(new ZeroDiscountStub());
+        $price = $calc->apply($products);
+
+        $this->assertEquals(0, $price->getAmount());
+    }
+
     # TODO:
-    # apply to empty collection
     # apply to one item
     # apply to 3 items
     # apply to 1 of 3 items
     # apply 3 discount types on 3 items
+
+    private function getDiscountCalculator(DiscountInterface ...$discounts): DiscountCalculator
+    {
+        $currencyProvider = $this->createMock(CurrencyProviderInterface::class);
+        $currencyProvider->method('getCurrency')
+            ->willReturn(Currency::PLN);
+
+        return new DiscountCalculator($currencyProvider, ...$discounts);
+    }
 }
