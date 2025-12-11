@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Modules\Discounts\Domain;
+namespace App\Modules\Discounts\Domain\Model;
 
 use App\SharedKernel\Domain\CollectionInterface;
 use App\SharedKernel\Domain\ProductInterface;
@@ -19,8 +19,9 @@ class ProductCollection implements CollectionInterface
      */
     private array $items = [];
 
-    public function __construct(ProductInterface ... $products)
-    {
+    public function __construct(
+        ProductInterface ... $products
+    ) {
         $this->items = $products;
     }
 
@@ -42,5 +43,20 @@ class ProductCollection implements CollectionInterface
     public function count(): int
     {
         return count($this->items);
+    }
+
+    public function getTotalAmount(): Amount
+    {
+        if ($this->isEmpty()) {
+            return new Amount(0);
+        }
+
+        $total = array_reduce(
+            $this->items,
+            static fn (int $carry, ProductInterface $product) => $carry + $product->getPrice()->getAmount(),
+            0
+        );
+
+        return new Amount($total);
     }
 }

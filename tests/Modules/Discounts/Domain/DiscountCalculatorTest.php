@@ -5,9 +5,13 @@ declare(strict_types=1);
 namespace App\Tests\Modules\Discounts\Domain;
 
 use App\Modules\Discounts\Domain\DiscountCalculator;
-use App\Modules\Discounts\Domain\DiscountInterface;
+use App\Modules\Discounts\Domain\DiscountStrategies\DiscountInterface;
+use App\Modules\Discounts\Domain\DiscountStrategies\FixedDiscount;
+use App\Modules\Discounts\Domain\Model\Amount;
+use App\Modules\Discounts\Domain\Model\Price;
+use App\Modules\Discounts\Domain\Model\Product;
+use App\Modules\Discounts\Domain\Model\ProductCollection;
 use App\Modules\Discounts\Domain\Port\CurrencyProviderInterface;
-use App\Modules\Discounts\Domain\ProductCollection;
 use App\SharedKernel\Domain\Currency;
 use App\Tests\TestHelpers\Stubs\ZeroDiscountStub;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -32,7 +36,7 @@ class DiscountCalculatorTest extends TestCase
                     new class () {},
                 ],
                 'expectException' => true,
-                'exceptionMessage' => 'Argument #2 must be of type App\Modules\Discounts\Domain\DiscountInterface'
+                'exceptionMessage' => 'Argument #2 must be of type'
             ],
             'two discounts' => [
                 'discounts' => [
@@ -72,8 +76,30 @@ class DiscountCalculatorTest extends TestCase
         $this->assertEquals(0, $price->getAmount());
     }
 
+    public function testApplyToOneProduct(): void
+    {
+        $products = new ProductCollection(
+            new Product(
+                'TEST',
+                new Price(
+                    new Amount(300),
+                    Currency::PLN
+                ),
+                1
+            )
+        );
+
+        $calc = $this->getDiscountCalculator(
+            new FixedDiscount(
+                new Amount(100)
+            )
+        );
+
+        $price = $calc->apply($products);
+        $this->assertEquals(200, $price->getAmount());
+    }
+
     # TODO:
-    # apply to one item
     # apply to 3 items
     # apply to 1 of 3 items
     # apply 3 discount types on 3 items

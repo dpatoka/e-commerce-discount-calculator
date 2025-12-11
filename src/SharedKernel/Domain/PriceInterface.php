@@ -9,4 +9,6 @@ interface PriceInterface
     public function getAmount(): int;
 
     public function getCurrency(): string;
+
+    //    public function add(PriceInterface $price): self;
 }

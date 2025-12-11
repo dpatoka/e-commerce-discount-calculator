@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace App\Modules\Discounts\Domain;
 
+use App\Modules\Discounts\Domain\DiscountStrategies\DiscountInterface;
+use App\Modules\Discounts\Domain\Model\Price;
+use App\Modules\Discounts\Domain\Model\ProductCollection;
 use App\Modules\Discounts\Domain\Port\CurrencyProviderInterface;
 use App\SharedKernel\Domain\PriceInterface;
 use DomainException;
@@ -29,7 +32,17 @@ readonly class DiscountCalculator
     public function apply(ProductCollection $products): PriceInterface
     {
         if ($products->isEmpty()) {
-            return new Price(0, $this->currencyProvider->getCurrency());
+            return Price::createWithZero($this->currencyProvider->getCurrency());
         }
+
+        $discountedProducts = $products;
+        foreach ($this->discounts as $discount) {
+            $discountedProducts = $discount->apply($products);
+        }
+
+        return new Price(
+            $discountedProducts->getTotalAmount(),
+            $this->currencyProvider->getCurrency()
+        );
     }
 }
