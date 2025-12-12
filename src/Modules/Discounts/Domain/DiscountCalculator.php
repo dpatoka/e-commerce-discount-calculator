@@ -37,7 +37,7 @@ readonly class DiscountCalculator
 
         $discountedProducts = $products;
         foreach ($this->discounts as $discount) {
-            $discountedProducts = $discount->apply($products);
+            $discountedProducts = $discount->apply($discountedProducts);
         }
 
         return new Price(
