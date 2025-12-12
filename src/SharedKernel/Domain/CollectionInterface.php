@@ -16,5 +16,6 @@ interface CollectionInterface
     /** @return TValue[] */
     public function toArray(): array;
 
+    /** @return Iterator<TValue> */
     public function getIterator(): Iterator;
 }

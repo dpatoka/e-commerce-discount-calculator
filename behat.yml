@@ -1,5 +1,11 @@
 default:
     suites:
 
+        discounts:
+            paths:
+                - '%paths.base%/tests/Modules/Discounts/Interface/API/'
+            contexts:
+                - App\Tests\Modules\Discounts\Interface\API\DiscountsContext
+
     extensions:
         DAMA\DoctrineTestBundle\Behat\ServiceContainer\DoctrineExtension: ~
