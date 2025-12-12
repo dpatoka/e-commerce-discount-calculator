@@ -6,8 +6,13 @@ namespace App\Modules\Discounts\Application\Query\GetDiscountsForProductsQuery;
 
 use App\Modules\Discounts\Application\Query\GetDiscountsForProductsQuery\Model\Discount\DiscountCollection;
 use App\Modules\Discounts\Application\Query\GetDiscountsForProductsQuery\Model\Product\ProductCollection;
+use App\SharedKernel\Domain\PriceInterface;
+use App\SharedKernel\Infrastructure\Bus\QueryInterface;
 
-readonly class GetDiscountsForProductsQuery
+/**
+ * @implements QueryInterface<PriceInterface>
+ */
+readonly class GetDiscountsForProductsQuery implements QueryInterface
 {
     /**
      * @param string[] $selectedProducts

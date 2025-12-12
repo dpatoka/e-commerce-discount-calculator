@@ -4,7 +4,7 @@ Feature: Discounts
     So I need to check the value of discounted order quotes
 
     Scenario: Get fixed discount for 10 units of product
-        When I send a POST request to "/discounts/calculate" with body:
+        When I send a POST request to "api/discounts/calculate" with body:
         """
         {
             "products": [
@@ -22,7 +22,7 @@ Feature: Discounts
         And the JSON node "currency" should be equal to "PLN"
 
     Scenario: Get percentage discount for 10 units of product
-        When I send a POST request to "/discounts/calculate" with body:
+        When I send a POST request to "api/discounts/calculate" with body:
         """
         {
             "products": [
@@ -39,7 +39,7 @@ Feature: Discounts
         And the JSON node "amount" should be numeric
 
     Scenario: Get volume discount for 10 units of product, second product with not enough units
-        When I send a POST request to "/discounts/calculate" with body:
+        When I send a POST request to "api/discounts/calculate" with body:
         """
         {
             "products": [
@@ -57,7 +57,7 @@ Feature: Discounts
         And the JSON node "amount" should be numeric
 
     Scenario: Failing - Get fixed discount for not existing product
-        When I send a POST request to "/discounts/calculate" with body:
+        When I send a POST request to "api/discounts/calculate" with body:
         """
         {
             "products": [
@@ -74,7 +74,7 @@ Feature: Discounts
         And the JSON node "errors.request" should be equal to 'Price "NON-EXISTENT" not found'
 
     Scenario: Failing - Invalid discount type
-        When I send a POST request to "/discounts/calculate" with body:
+        When I send a POST request to "api/discounts/calculate" with body:
         """
         {
             "products": [
@@ -89,7 +89,7 @@ Feature: Discounts
         Then the response status code should be 422
 
     Scenario: Failing - Missing required fields
-        When I send a POST request to "/discounts/calculate" with body:
+        When I send a POST request to "api/discounts/calculate" with body:
         """
         {
             "products": [],

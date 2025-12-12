@@ -9,7 +9,9 @@ use App\Modules\Discounts\Application\Service\ProductsMapper;
 use App\Modules\Discounts\Domain\DiscountCalculator;
 use App\Modules\Discounts\Domain\Port\CurrencyProviderInterface;
 use App\SharedKernel\Domain\PriceInterface;
+use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
+#[AsMessageHandler]
 readonly class GetDiscountsForProductsQueryHandler
 {
     public function __construct(
