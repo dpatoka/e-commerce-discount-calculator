@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\SharedKernel\Infrastructure\EventSubscriber;
+namespace App\Infrastructure\EventSubscriber;
 
 use App\SharedKernel\Domain\Exception\NotFoundException;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;

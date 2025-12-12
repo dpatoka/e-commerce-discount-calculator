@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Modules\Discounts\Interface\API;
 
+use App\Infrastructure\Bus\QueryBus;
 use App\Modules\Discounts\Interface\API\Mapper\CalculateDiscountsRequestMapper;
 use App\Modules\Discounts\Interface\API\Request\CalculateDiscountsRequest;
 use App\Modules\Discounts\Interface\API\Response\DiscountPriceResponse;
-use App\SharedKernel\Infrastructure\Bus\QueryBus;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;

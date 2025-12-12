@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace App\Modules\Discounts\Application\Query\GetDiscountsForProductsQuery;
 
+use App\Infrastructure\Bus\QueryInterface;
 use App\Modules\Discounts\Application\Query\GetDiscountsForProductsQuery\Model\Discount\DiscountCollection;
 use App\Modules\Discounts\Application\Query\GetDiscountsForProductsQuery\Model\Product\ProductCollection;
 use App\SharedKernel\Domain\PriceInterface;
-use App\SharedKernel\Infrastructure\Bus\QueryInterface;
 
 /**
- * @implements QueryInterface<PriceInterface>
+ * @implements \App\Infrastructure\Bus\QueryInterface<PriceInterface>
  */
 readonly class GetDiscountsForProductsQuery implements QueryInterface
 {

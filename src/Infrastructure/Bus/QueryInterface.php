@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\SharedKernel\Infrastructure\Bus;
+namespace App\Infrastructure\Bus;
 
 /**
  * @template T
