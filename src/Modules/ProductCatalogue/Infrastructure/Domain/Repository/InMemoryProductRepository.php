@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Modules\ProductCatalogue\Infrastructure\Domain\Repository;
 
+use App\Modules\ProductCatalogue\Domain\Model\Price;
 use App\Modules\ProductCatalogue\Domain\Repository\ProductRepositoryInterface;
-use App\Modules\ProductCatalogue\Infrastructure\Domain\Model\Price;
 use App\SharedKernel\Domain\PriceCollection;
 
 /**

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Modules\ProductCatalogue\Infrastructure\Domain\Model;
+namespace App\Modules\ProductCatalogue\Domain\Model;
 
 use App\SharedKernel\Domain\PriceInterface;
 
