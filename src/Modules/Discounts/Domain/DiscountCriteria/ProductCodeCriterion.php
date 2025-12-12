@@ -18,6 +18,6 @@ readonly class ProductCodeCriterion implements DiscountCriterionInterface
 
     public function isSatisfiedBy(Product $product): bool
     {
-        return in_array($product->getCode(), $this->codes);
+        return in_array($product->getCode(), $this->codes, true);
     }
 }

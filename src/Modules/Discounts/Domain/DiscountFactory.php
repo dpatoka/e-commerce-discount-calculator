@@ -15,7 +15,7 @@ use App\Modules\Discounts\Domain\Model\Amount;
 use App\Modules\Discounts\Domain\Model\Percentage;
 use App\Modules\Discounts\Domain\Model\Quantity;
 
-class DiscountFactory
+readonly class DiscountFactory
 {
     /** @var string[]  */
     private array $productCodes;
