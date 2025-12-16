@@ -1,3 +1,19 @@
+# Contents
+
+- [TL;DR](#tldr)
+- [Running](#running)
+- [Code standards](#code-standards)
+- [Task](#task)
+    - [Objective](#objective)
+    - [Requirements](#requirements)
+    - [Supported Discount Types](#supported-discount-types)
+    - [Additional Assumptions](#additional-assumptions)
+- [Solution](#solution)
+    - [Quick overview](#quick-overview)
+    - [Architecture](#architecture)
+    - [Testing Strategy](#testing-strategy)
+- [How do I work?](#how-do-i-work)
+
 # TL;DR
 🛒 E-commerce Discount Calculator
 
@@ -9,42 +25,46 @@ A recruitment task demonstrating my approach to software development:
 📖 Approach: Extreme Programming • Emergent Design
 
 # Running
-- Symfony Docker skeleton used from https://github.com/dunglas/symfony-docker
-- `make setup` will setup project
-- `make qa` will run linters and tests
+1. If not already done, [install Docker Compose](https://docs.docker.com/compose/install/) (v2.10+)
+2. If not already done, install Make on [Linux](https://www.incredibuild.com/integrations/gnu-make), [macOs](https://formulae.brew.sh/formula/make), [Windows](https://gnuwin32.sourceforge.net/packages/make.htm)
+3. `make setup` will setup app
+4. `make qa` will run linters and tests
+
+Symfony Docker skeleton used from https://github.com/dunglas/symfony-docker
 
 # Code standards
 - `PSR12` and more, check `.php-cs-fixer.dist.php`
 - `PHPStan` level `10`
 
-# How do I work?
-- I do [Extreme programming (XP)](https://en.wikipedia.org/wiki/Extreme_programming), the flavour of Agile I truly love.
-- I've learned to develop from top to bottom to design better APIs:
-    - Start from a stable abstractions which will define APIs and communication patterns.
-    - Describe their behaviours with tests, then implement internals.
-    - Here it was `DiscountCalculator`, often I start with the Endpoint API.
-- I was developing this project using TDD/BDD:
-  - Start with tests, iteratively implement them one by one and finish with refactors/cleanups. 
-  - Each circle includes creating also low-level tests. 
-  - Each commit is a working part.
-- Thanks to TDD/BDD I split big problems into smaller ones and solve one at time. 
-  - This makes a huge difference as [Kent Beck explained it nicely](https://youtube.com/clip/UgkxYFXi2kspZBzh28AaALCwsTIqQpUpRU_i?si=ws7tTj2eli10L5XW). 
-  - This allows for a fast pace of work, with bug levels kept low and code quality controlled. 
-    - If there is time, I can put more on quality. 
-    - When no time, I can deliver good enough and refactor in the next release.
-  - As a result, the solution is growing organically. 
-- I do [Emergent Design](https://www.amazon.pl/Emergent-Design-Evolutionary-Professional-Development/dp/0321889061) which is an Agile approach for architecture. 
-  - It helps to evolve architecture over time to keep it robust and clean. 
-  - I'm fascinated by systems evolution and I help them change for the better.
-- You can see all of that in project's git history.
-  - Also, my mistakes and fixes.
-  - *The code is the artifact of the learning process*, [Ward Cunningham](https://en.wikipedia.org/wiki/Ward_Cunningham).
+# Task
+## Objective
 
+Implementation of a discount calculator for an e-commerce system.
 
+## Requirements
 
+- Calculator accepts a list of available discounts via constructor
+- Exposes a public method to calculate the total cart value after applying discounts
 
+## Supported Discount Types
 
-# Architecture
+- **Fixed** — flat amount deducted from the price (e.g. -50 USD)
+- **Percentage** — percentage reduction of the price (e.g. -15%)
+- **Volume-based** — discount triggered when a minimum quantity threshold is met (e.g. -75 USD when purchasing ≥ 8 items)
+
+## Additional Assumptions
+
+- Discounts can be restricted to specific products
+- Products have: code, price (amount + currency), and quantity
+
+# Solution
+## Quick overview
+- Check Behat test to get overview of the feature `tests/Modules/Discounts/Interface/API/get_discounts.feature`
+  - Check component tests to for their business logic
+- Code entry point `src/Modules/Discounts/Interface/API/GetDiscountsController.php`
+  - Flow in Module layers: Interface → Application → Domain
+
+## Architecture
 - I've done this project with a `Modular Monolith` approach.
     - It's a good start that opens a clear path into decomposition to `Microservices`.
     - Of course, decomposition should be done only when needed, e.g.:
@@ -73,7 +93,7 @@ A recruitment task demonstrating my approach to software development:
   - `Interface\Facade` is for other module calls.
 - `SharedKernel` is the place for contracts used in many places
 
-# Testing Strategy
+## Testing Strategy
 - For me tests are a design tool, living documentation and a safety net (regression testing). I do `TDD` and `BDD` 🙂.
 - I use `PHPUnit` following [Detroit TDD school](https://zone84.tech/architecture/london-and-detroit-schools-of-unit-tests/) (Kent Beck's) so:
     - `Unit under test` is not the method or the class. It's the feature with the stable interface.
@@ -99,3 +119,26 @@ A recruitment task demonstrating my approach to software development:
     - Tests are more stable against refactoring so encourage continuous improvements.
     - Tests are high quality code which documents and explains the behaviour of code.
     - In result: tests help to ship new features faster.
+
+# How do I work?
+- I do [Extreme programming (XP)](https://en.wikipedia.org/wiki/Extreme_programming), the flavour of Agile I truly love.
+- I've learned to develop from top to bottom to design better APIs:
+    - Start from a stable abstractions which will define APIs and communication patterns.
+    - Describe their behaviours with tests, then implement internals.
+    - Here it was `DiscountCalculator`, often I start with the Endpoint API.
+- I was developing this project using TDD/BDD:
+    - Start with tests, iteratively implement them one by one and finish with refactors/cleanups.
+    - Each circle includes creating also low-level tests.
+    - Each commit is a working part.
+- Thanks to TDD/BDD I split big problems into smaller ones and solve one at time.
+    - This makes a huge difference as [Kent Beck explained it nicely](https://youtube.com/clip/UgkxYFXi2kspZBzh28AaALCwsTIqQpUpRU_i?si=ws7tTj2eli10L5XW).
+    - This allows for a fast pace of work, with bug levels kept low and code quality controlled.
+        - If there is time, I can put more on quality.
+        - When no time, I can deliver good enough and refactor in the next release.
+    - As a result, the solution is growing organically.
+- I do [Emergent Design](https://www.amazon.pl/Emergent-Design-Evolutionary-Professional-Development/dp/0321889061) which is an Agile approach for architecture.
+    - It helps to evolve architecture over time to keep it robust and clean.
+    - I'm fascinated by systems evolution and I help them change for the better.
+- You can see all of that in project's git history.
+    - Also, my mistakes and fixes.
+    - *The code is the artifact of the learning process*, [Ward Cunningham](https://en.wikipedia.org/wiki/Ward_Cunningham).
