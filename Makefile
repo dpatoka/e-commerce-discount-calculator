@@ -43,11 +43,7 @@ setup-local:
 	@$(MAKE) migrate-no-interaction
 
 setup-tests:
-	@$(MAKE) create-test-db
-	@$(MAKE) migrate-test-db
-
-setup-tests-again:
-	@$(MAKE) drop-test-db
+	-@$(MAKE) drop-test-db
 	@$(MAKE) create-test-db
 	@$(MAKE) migrate-test-db
 
