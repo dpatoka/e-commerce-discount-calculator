@@ -110,7 +110,7 @@ cf:
 	@$(COMPOSER) exec "php-cs-fixer fix"
 
 stan:
-	@$(COMPOSER) exec "phpstan analyse --configuration=phpstan.neon --memory-limit=256M"
+	@$(COMPOSER) exec "phpstan analyse --configuration=phpstan.dist.neon --memory-limit=256M"
 
 ## —— Composer 🧙 ——————————————————————————————————————————————————————————————
 composer: ## Run composer, pass the parameter "c=" to run a given command, example: make composer c='req symfony/orm-pack'
